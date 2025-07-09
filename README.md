@@ -16,7 +16,7 @@ KubeLink is a minimal personal mini project But production-ready URL shortener s
 ---
 
 ## 🏗️ Tech Stack:
-- FastAPI / Node.js (Backend)
+- FastAPI (Backend)
 - PostgreSQL (Database)
 - Docker
 - Kubernetes (GKE)
