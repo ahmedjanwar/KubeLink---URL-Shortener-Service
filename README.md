@@ -1,4 +1,3 @@
-# KubeLink---URL-Shortener-Service
 # 🚀 KubeLink - URL Shortener Microservice (GKE + Docker + GitHub CI/CD)
 
 KubeLink is a minimal, production-ready URL shortener service built with Docker, Kubernetes, and deployed on Google Cloud Platform (GKE), fully automated with GitHub Actions CI/CD.
