@@ -33,6 +33,7 @@ KubeLink is a minimal personal mini project But production-ready URL shortener s
 ---
 
 ## 📂 Project Structure:
+
 KubeLink---URL-Shortener-Service/
 │
 ├── api/                           # FastAPI Backend App
