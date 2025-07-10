@@ -33,3 +33,29 @@ KubeLink is a minimal personal mini project But production-ready URL shortener s
 ---
 
 ## 📂 Project Structure:
+KubeLink---URL-Shortener-Service/
+│
+├── api/                           # FastAPI Backend App
+│   ├── main.py                    # App entry point
+│   ├── database.py                # Database connection config
+│   ├── models.py                  # SQLAlchemy models
+│   ├── schemas.py                 # Pydantic schemas
+│   ├── crud.py                    # Database CRUD operations
+│   └── requirements.txt           # Python dependencies
+│
+├── k8s/                           # Kubernetes Manifests
+│   ├── deployment.yaml            # API Deployment
+│   ├── service.yaml               # API Service
+│   ├── configmap.yaml             # ConfigMaps (App settings)
+│   ├── secret.yaml                # Secrets (DB credentials)
+│   └── ingress.yaml               # Ingress (optional, for custom domain / HTTPS)
+│
+├── .github/                       # GitHub Actions CI/CD Pipeline
+│   └── workflows/
+│       └── deploy.yml             # CI/CD workflow for build & deploy
+│
+├── Dockerfile                     # Dockerfile for backend container
+├── docker-compose.yml             # Docker Compose (Local Dev)
+├── README.md                      # Project Documentation
+└── LICENSE                        # License (MIT)
+
