@@ -20,13 +20,18 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Configure Docker for GCR
-        run: gcloud auth configure-docker --quiet
+      - name: Authenticate Docker to GCR
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" > $HOME/gcloud-key.json
+          gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
+          gcloud auth configure-docker --quiet
 
       - name: Build & Push Docker Image
         run: |
           docker buildx create --use --platform linux/amd64
-          docker buildx build --platform linux/amd64 -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/kubelink-api:latest --push -f api/Dockerfile ./api
+          docker buildx build --platform linux/amd64 \
+            -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/kubelink-api:latest \
+            --push -f api/Dockerfile ./api
 
       - name: Get GKE Credentials
         run: |
