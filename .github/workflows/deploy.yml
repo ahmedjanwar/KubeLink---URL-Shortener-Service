@@ -7,6 +7,42 @@ on:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Authenticate Docker to Google Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: gcr.io
+          username: _json_key
+          password: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Build & Push Docker Image
+        run: |
+          docker buildx create --use --platform linux/amd64
+          docker buildx build --platform linux/amd64 -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/kubelink-api:latest --push -f api/Dockerfile ./api
+
+      - name: Get GKE Credentials
+        run: |
+          gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} --region ${{ secrets.GKE_CLUSTER_REGION }}
+
+      - name: Deploy to GKE
+        run: |
+          kubectl apply -f k8s/
+
+  deploy:
     name: Build & Deploy to GKE
     runs-on: ubuntu-latest
 
